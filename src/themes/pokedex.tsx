@@ -1,8 +1,10 @@
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
-  colorSchemes: {
-    dark: true,
+  palette: {
+    background: {
+      default: "#e9e9e9ff",
+    },
   },
   typography: {
     fontFamily: "Poppins, sans-serif",
