@@ -47,7 +47,7 @@ Make sure you have Node.js installed on your machine:
 1. **Clone the repository**
 
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/hudsr/pokedex-app
    cd pokedex-app
    ```
 
@@ -165,7 +165,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🎮 Live Demo
 
-Try the app: [Pokédex App Demo](#) _(Add your deployment URL here)_
+Try the app: [Pokédex App Demo](https://hudsonramos.com.br/pokedex)
 
 ---
 
