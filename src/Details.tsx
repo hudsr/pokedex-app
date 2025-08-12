@@ -113,7 +113,10 @@ function PokemonDetails() {
       >
         <Box sx={{ mb: "-2rem", zIndex: 1 }}>
           <img
-            src={data.sprites.other.dream_world.front_default}
+            src={
+              data.sprites.other.dream_world.front_default ||
+              "https://img.pokemondb.net/sprites/home/normal/unown-a.png"
+            }
             alt={data.name}
             style={{
               width: "10rem",

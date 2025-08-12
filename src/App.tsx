@@ -51,12 +51,13 @@ function App() {
   return (
     <>
       <Box p={3} mt={6}>
-        <Typography
-          variant="h5"
-          component="h1"
-          sx={{ fontWeight: "bold", mb: 2 }}
-        >
+        <Typography variant="h5" component="h1" sx={{ fontWeight: "bold" }}>
           Pokémon List
+        </Typography>
+
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          {filteredPokemon.length} Pokémon found.{" "}
+          {pokemonList.length === 0 && "Try another name."}
         </Typography>
 
         <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
@@ -71,10 +72,10 @@ function App() {
           >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Search by name (e.g., bulbasaur)"
+              placeholder="Filter by name (e.g., bulbasaur)"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              inputProps={{ "aria-label": "search pokemon" }}
+              inputProps={{ "aria-label": "Filter pokemon" }}
             />
           </Paper>
 
@@ -89,12 +90,6 @@ function App() {
             </Button>
           )}
         </Box>
-
-        {searchTerm && pokemonList.length === 0 && (
-          <Typography variant="body2" color="error" sx={{ mb: 2 }}>
-            No Pokemon found matching "{searchTerm}". Try another name.
-          </Typography>
-        )}
 
         <Grid
           container
@@ -131,6 +126,10 @@ function App() {
                       component="img"
                       height="100"
                       image={imageUrl}
+                      onError={(e) => {
+                        e.currentTarget.src =
+                          "https://img.pokemondb.net/sprites/home/normal/unown-a.png";
+                      }}
                       alt={pokemon.name}
                       sx={{
                         objectFit: "contain",

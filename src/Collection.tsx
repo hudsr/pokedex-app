@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -27,6 +28,7 @@ interface Pokemon {
 }
 
 function Collection() {
+  const navigate = useNavigate();
   const { capturedPokemons, removePokemon } = useCollectionStore();
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
@@ -64,12 +66,12 @@ function Collection() {
   return (
     <>
       <Box p={3} mt={6}>
-        <Typography
-          variant="h5"
-          component="h1"
-          sx={{ fontWeight: "bold", mb: 2 }}
-        >
-          Pokémon Collection
+        <Typography variant="h5" component="h1" sx={{ fontWeight: "bold" }}>
+          Your Collection
+        </Typography>
+
+        <Typography variant="body2" sx={{ mb: 2 }}>
+          You have {capturedPokemons.length} captured Pokémon.
         </Typography>
 
         <Grid
@@ -85,6 +87,7 @@ function Collection() {
                 }}
               >
                 <CardActionArea
+                  onClick={() => navigate(`/pokemon/${pokemon.name}`)}
                   sx={{
                     display: "flex",
                     flexDirection: "column",
