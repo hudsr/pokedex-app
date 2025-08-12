@@ -36,7 +36,7 @@ function Collection() {
   if (capturedPokemons.length === 0) {
     return (
       <Feedback
-        imageUrl="/crying-pikachu.gif"
+        imageUrl="/pokedex/crying-pikachu.gif"
         imageAlt="No captured Pokémon"
         message="No captured Pokémon"
         navigationMessage="Go to list"

@@ -21,7 +21,7 @@ export default function Error() {
       }}
     >
       <Avatar
-        src="/public/crying-pikachu.gif"
+        src="/pokedex/crying-pikachu.gif"
         alt="Crying Pikachu"
         sx={{ width: 90, height: 90 }}
       />

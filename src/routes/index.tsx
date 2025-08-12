@@ -14,7 +14,7 @@ export function AppRoutes() {
         path="*"
         element={
           <Feedback
-            imageUrl="/crying-pikachu.gif"
+            imageUrl="/pokedex/crying-pikachu.gif"
             imageAlt="Page not found"
             message="Page not found"
             navigationMessage="Go to list"

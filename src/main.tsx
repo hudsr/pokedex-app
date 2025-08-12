@@ -14,7 +14,7 @@ import "@fontsource/poppins/700.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/pokedex">
       <ThemeProvider theme={pokedex}>
         <CssBaseline />
         <TopBar />
