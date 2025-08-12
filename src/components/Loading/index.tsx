@@ -15,7 +15,7 @@ export default function Loading() {
         padding: 3,
       }}
     >
-      <CircularProgress />
+      <CircularProgress sx={{ color: "#DC0A2D" }} />
     </Box>
   );
 }

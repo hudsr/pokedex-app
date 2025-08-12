@@ -11,7 +11,7 @@ import { red } from "@mui/material/colors";
 import Feedback from "@/components/Feedback";
 import ConfirmationModal from "@/components/ConfirmationModal";
 
-import useCollectionStore from "./store/collectionStore";
+import useCollectionStore from "./stores/collectionStore";
 import Button from "@mui/material/Button";
 
 interface Pokemon {

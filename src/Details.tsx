@@ -3,44 +3,39 @@ import { useParams } from "react-router";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
-import { useFetch } from "@/hooks/useFetch";
 import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
 import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import Error from "@/components/Error";
+import Loading from "@/components/Loading";
 
 import { getPokemonTypeColor } from "@/helpers/pokemonColor";
 import ConfirmationModal from "@/components/ConfirmationModal";
-
-import Box from "@mui/material/Box";
-
-interface Type {
-  slot: number;
-  type: {
-    name: string;
-    url: string;
-  };
-}
-
-import useCollectionStore from "@/store/collectionStore";
+import usePokemonStore from "@/stores/pokemonStore";
+import useCollectionStore from "@/stores/collectionStore";
 
 function PokemonDetails() {
   const { addPokemon, removePokemon, isPokemonCaptured } = useCollectionStore();
+  const { usePokemonDetails } = usePokemonStore();
   const { name } = useParams();
+
   const [open, setOpen] = useState(false);
   const [actionMessage, setActionMessage] = useState("");
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [isAttemptingCatch, setIsAttemptingCatch] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
 
-  const { data, error } = useFetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-  const { data: speciesData, error: speciesError } = useFetch(
-    `https://pokeapi.co/api/v2/pokemon-species/${name}`
-  );
+  const {
+    data,
+    error,
+    isLoading: detailsLoading,
+  } = usePokemonDetails(name || "");
 
-  if (error || speciesError) return <div>Error loading Pokemon details</div>;
-  if (!data || !speciesData) return <div>Loading...</div>;
+  if (error) return <Error />;
+  if (detailsLoading || !data) return <Loading />;
 
   const handleClose = (
     _event: SyntheticEvent | Event,
@@ -49,11 +44,10 @@ function PokemonDetails() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
-  const typeNames = data.types.map((type: Type) => type.type.name);
+  const typeNames = data.types.map((type) => type.type.name);
 
   const handleCapturePokemon = async () => {
     if (isPokemonCaptured(data.id)) {
@@ -64,7 +58,6 @@ function PokemonDetails() {
 
       setTimeout(() => {
         setIsShaking(false);
-
         const catchSuccess = Math.random() >= 0.6;
 
         if (catchSuccess) {
@@ -136,7 +129,7 @@ function PokemonDetails() {
           }}
         >
           <Stack direction="row" spacing={1} mt={2}>
-            {data.types.map((type: Type) => (
+            {data.types.map((type) => (
               <Chip
                 key={type.type.name}
                 label={type.type.name}
