@@ -4,7 +4,21 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-export default function EmptyState() {
+interface FeedbackProps {
+  imageUrl: string;
+  imageAlt: string;
+  message: string;
+  navigationMessage: string;
+  link: string;
+}
+
+export default function Feedback({
+  imageUrl,
+  imageAlt,
+  message,
+  navigationMessage,
+  link,
+}: FeedbackProps) {
   const navigate = useNavigate();
 
   return (
@@ -20,16 +34,12 @@ export default function EmptyState() {
         padding: 3,
       }}
     >
-      <Avatar
-        src="/crying-pikachu.gif"
-        alt="Page not found"
-        sx={{ width: 90, height: 90 }}
-      />
+      <Avatar src={imageUrl} alt={imageAlt} sx={{ width: 90, height: 90 }} />
 
-      <Typography variant="h6">Page not found</Typography>
+      <Typography variant="h6">{message}</Typography>
 
-      <Button color="error" variant="outlined" onClick={() => navigate("/")}>
-        Go to Home
+      <Button color="error" variant="outlined" onClick={() => navigate(link)}>
+        {navigationMessage}
       </Button>
     </Box>
   );

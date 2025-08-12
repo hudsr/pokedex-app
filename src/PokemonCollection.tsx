@@ -1,46 +1,28 @@
-import { useNavigate } from "react-router";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
+
+import Feedback from "@/components/Feedback";
 
 import useCollectionStore from "./store/collectionStore";
 import Button from "@mui/material/Button";
 
 function PokemonCollection() {
-  const navigate = useNavigate();
   const { capturedPokemons, removePokemon } = useCollectionStore();
 
   if (capturedPokemons.length === 0) {
     return (
-      <Box
-        gap={2}
-        sx={{
-          minHeight: "100vh",
-          width: "100vw",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 3,
-        }}
-      >
-        <Avatar
-          src="/crying-pikachu.gif"
-          alt="No captured Pokémon"
-          sx={{ width: 90, height: 90 }}
-        />
-
-        <Typography variant="h6">No captured Pokémon</Typography>
-
-        <Button color="error" variant="outlined" onClick={() => navigate("/")}>
-          Go to Home
-        </Button>
-      </Box>
+      <Feedback
+        imageUrl="/crying-pikachu.gif"
+        imageAlt="No captured Pokémon"
+        message="No captured Pokémon"
+        navigationMessage="Go to list"
+        link="/"
+      />
     );
   }
 

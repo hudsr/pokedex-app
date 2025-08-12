@@ -16,7 +16,7 @@ import useCollectionStore from "./store/collectionStore";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import ClearIcon from "@mui/icons-material/Clear";
-import LoadingState from "@/components/LoadingState";
+import Loading from "@/components/Loading";
 
 interface Pokemon {
   name: string;
@@ -36,7 +36,7 @@ function App() {
     setSearchTerm("");
   };
 
-  if (isLoading) return <LoadingState />;
+  if (isLoading) return <Loading />;
   if (error)
     return <Typography variant="h3">Error: {error.message}</Typography>;
 
