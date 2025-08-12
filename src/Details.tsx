@@ -8,16 +8,20 @@ import Card from "@mui/material/Card";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Snackbar, { type SnackbarCloseReason } from "@mui/material/Snackbar";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { getPokemonTypeColor } from "@/helpers/pokemonColor";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 import Box from "@mui/material/Box";
+
+interface Type {
+  slot: number;
+  type: {
+    name: string;
+    url: string;
+  };
+}
 
 import useCollectionStore from "@/store/collectionStore";
 
@@ -49,19 +53,7 @@ function PokemonDetails() {
     setOpen(false);
   };
 
-  const typeNames = data.types.map((type) => type.type.name);
-
-  const getCleanFlavorText = () => {
-    const englishEntry = speciesData.flavor_text_entries.find(
-      (entry) => entry.language.name === "en"
-    );
-    const flavorText = englishEntry?.flavor_text || "";
-    return flavorText
-      .replace(/\n/g, " ")
-      .replace(/\f/g, " ")
-      .replace(/\s+/g, " ")
-      .trim();
-  };
+  const typeNames = data.types.map((type: Type) => type.type.name);
 
   const handleCapturePokemon = async () => {
     if (isPokemonCaptured(data.id)) {
@@ -141,7 +133,7 @@ function PokemonDetails() {
           }}
         >
           <Stack direction="row" spacing={1} mt={2}>
-            {data.types.map((type) => (
+            {data.types.map((type: Type) => (
               <Chip
                 key={type.type.name}
                 label={type.type.name}
@@ -154,16 +146,12 @@ function PokemonDetails() {
           </Stack>
 
           <Typography
-            variant="body1"
+            variant="h4"
             sx={{ fontWeight: "bold", textTransform: "capitalize" }}
             mt="0.5rem"
             color={getPokemonTypeColor(typeNames)}
           >
-            About {data.name}
-          </Typography>
-
-          <Typography variant="body2" color="text.secondary" textAlign="center">
-            {getCleanFlavorText()}
+            {data.name}
           </Typography>
 
           <Button
@@ -214,38 +202,15 @@ function PokemonDetails() {
         </Card>
       </Box>
 
-      <Dialog
+      <ConfirmationModal
         open={confirmDialogOpen}
         onClose={handleCancelRelease}
-        aria-labelledby="release-dialog-title"
-        aria-describedby="release-dialog-description"
-      >
-        <DialogTitle
-          id="release-dialog-title"
-          sx={{ textTransform: "capitalize" }}
-        >
-          Release {data.name}?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="release-dialog-description">
-            Are you sure you want to release {data.name}? This action cannot be
-            undone.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelRelease} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleConfirmRelease}
-            color="error"
-            variant="contained"
-            autoFocus
-          >
-            Release
-          </Button>
-        </DialogActions>
-      </Dialog>
+        onConfirm={handleConfirmRelease}
+        title={`Release ${data.name}?`}
+        description={`Are you sure you want to release ${data.name}? This action cannot be undone.`}
+        confirmText="Release"
+        cancelText="Cancel"
+      />
 
       <style>{`
         @keyframes shake {

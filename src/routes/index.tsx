@@ -1,15 +1,15 @@
 import { Routes, Route } from "react-router";
 import App from "@/App";
-import PokemonCollection from "@/PokemonCollection";
-import PokemonDetails from "@/PokemonDetails";
+import Collection from "@/Collection";
+import Details from "@/Details";
 import Feedback from "@/components/Feedback";
 
 export function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/collection" element={<PokemonCollection />} />
-      <Route path="/pokemon/:name" element={<PokemonDetails />} />
+      <Route path="/collection" element={<Collection />} />
+      <Route path="/pokemon/:name" element={<Details />} />
       <Route
         path="*"
         element={
