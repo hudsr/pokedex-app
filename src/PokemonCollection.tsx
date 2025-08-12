@@ -1,0 +1,120 @@
+import { useNavigate } from "react-router";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
+import Avatar from "@mui/material/Avatar";
+import { red } from "@mui/material/colors";
+
+import useCollectionStore from "./store/collectionStore";
+import Button from "@mui/material/Button";
+
+function PokemonCollection() {
+  const navigate = useNavigate();
+  const { capturedPokemons, removePokemon } = useCollectionStore();
+
+  if (capturedPokemons.length === 0) {
+    return (
+      <Box
+        gap={2}
+        sx={{
+          minHeight: "100vh",
+          width: "100vw",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 3,
+        }}
+      >
+        <Avatar
+          src="/crying-pikachu.gif"
+          alt="No captured Pokémon"
+          sx={{ width: 90, height: 90 }}
+        />
+
+        <Typography variant="h6">No captured Pokémon</Typography>
+
+        <Button color="error" variant="outlined" onClick={() => navigate("/")}>
+          Go to Home
+        </Button>
+      </Box>
+    );
+  }
+
+  return (
+    <Box p={3} mt={6}>
+      <Typography
+        variant="h5"
+        component="h1"
+        sx={{ fontWeight: "bold", mb: 2 }}
+      >
+        Pokémon Collection
+      </Typography>
+
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 2, sm: 12, md: 18 }}
+      >
+        {capturedPokemons.map((pokemon: any) => (
+          <Grid key={pokemon.id} size={{ xs: 2, sm: 4, md: 3 }}>
+            <Card
+              sx={{
+                borderRadius: 2,
+              }}
+            >
+              <CardActionArea
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  p: 2,
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  height="100"
+                  image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}
+                  alt={pokemon.name}
+                  sx={{
+                    objectFit: "contain",
+                    maxWidth: "100px",
+                  }}
+                />
+
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  align="center"
+                  fontSize="1rem"
+                  sx={{ textTransform: "capitalize" }}
+                >
+                  {pokemon.name}
+                </Typography>
+              </CardActionArea>
+
+              <Button
+                color="error"
+                sx={{
+                  borderColor: "#DC0A2D",
+                  color: "#DC0A2D",
+                  backgroundColor: red[50],
+                }}
+                size="small"
+                fullWidth
+                onClick={() => removePokemon(pokemon)}
+              >
+                Release
+              </Button>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
+}
+
+export default PokemonCollection;
